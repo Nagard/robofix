@@ -1,0 +1,112 @@
+<!doctype html>
+<meta charset='utf-8'>
+<link rel="shortcut icon" href="favicon.ico">
+<link href='dist/dragula.css' rel='stylesheet' type='text/css' />
+<link href='kanban-shop.css' rel='stylesheet' type='text/css' />
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<title>Shop Board</title>
+   
+  
+
+
+<header>
+  <h1>Drag & Drop<br/><span>Shop Board</span></h1>
+</header>
+<!--
+<div class="add-task-container">
+  <input type="text" maxlength="12" id="taskText" placeholder="New Task..." onkeydown="if (event.keyCode == 13)
+                        document.getElementById('add').click()">
+  <button id="add" class="button add-button" onclick="addTask()">Add New Task</button>
+</div>
+-->
+
+<div id="main-container" class="main-container">
+  <ul class="columns">
+
+<ul>
+	<li class="column to-do-column">
+      <div class="column-header">
+        <h4>Category</h4>
+      </div>
+      <ul  class="task-list" id="category">
+        <li style="cursor:default" class="task">
+          <p>Vorspeise</p>
+        </li>
+        <li style="cursor:default" class="task">
+          <p>Hauptgericht</p>
+        </li>
+        <li style="cursor:default" class="task">
+          <p>Nachspeise</p>
+        </li>
+        <li style="cursor:default" class="task">
+          <p>Getränke</p>
+        </li>
+      </ul>
+    </li>
+</ul>
+
+
+	
+	
+
+    <li class="column doing-column">
+      <div class="column-header">
+        <h4>Products</h4>
+      </div>
+      <ul class="task-list" id="products">
+        <li class="task">
+          <p>Hypothesis</p>
+        </li>
+        <li class="task">
+          <p>User Testing</p>
+        </li>
+        <li class="task">
+          <i class='fas fa-apple-alt'></i>
+        </li>
+      </ul>
+    </li>
+
+    <li class="column done-column">
+      <div class="column-header">
+        <h4>Busket</h4>
+      </div>
+      <ul class="task-list" id="done">
+        <li class="task">
+          <p>Ideation</p>
+        </li>
+        <li class="task">
+          <p>Sketches</p>
+        </li>
+      </ul>
+    </li>
+
+    <li class="column trash-column">
+      <div class="column-header">
+        <h4>Trash</h4>
+      </div>
+      <ul class="task-list" id="trash">
+        <li class="task">
+          <p>Interviews</p>
+        </li>
+        <li class="task">
+          <p>Research</p>
+        </li>
+
+      </ul>
+      <div class="column-button">
+        <button class="button delete-button" onclick="emptyTrash()">Delete</button>
+      </div>
+    </li>
+
+  </ul>
+</div>
+
+
+
+
+
+
+<script src='dist/dragula.js'></script>
+<script src='example/kanban-shop.js'></script>
