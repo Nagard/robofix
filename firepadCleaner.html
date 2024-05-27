@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Cleaner</title>
+    <script>
+        function cleanClipboardText() {
+            navigator.clipboard.readText()
+                .then(text => {
+                    const cleanedText = text.replace(/[]/g, '');
+                    document.getElementById('outputTextArea').value = cleanedText;
+                    navigator.clipboard.writeText(cleanedText).then(() => {
+                        console.log('Cleaned text copied to clipboard');
+                    });
+                })
+                .catch(err => {
+                    console.error('Failed to read clipboard contents: ', err);
+                });
+        }
+
+        function copyToClipboard() {
+            const cleanedText = document.getElementById('outputTextArea').value;
+            navigator.clipboard.writeText(cleanedText).then(() => {
+                alert('Cleaned text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        document.addEventListener('paste', (event) => {
+            cleanClipboardText();
+        });
+    </script>
+</head>
+<body>
+    <h1>Clipboard Cleaner</h1>
+    <p>Paste some text here to clean it automatically.</p>
+    <textarea id="cleanedTextArea" rows="20" cols="200" placeholder="Paste text here..."></textarea>
+    <h2>Cleaned Text Output:</h2>
+    <textarea id="outputTextArea" rows="20" cols="200" placeholder="Cleaned text will appear here..." readonly></textarea>
+    <br>
+    <button onclick="copyToClipboard()">Copy Cleaned Text to Clipboard</button>
+</body>
+</html>
