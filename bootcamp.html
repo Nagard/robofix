@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Menü mit Firebase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+        #menu {
+            width: 100%;
+            padding: 10px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+        }
+        #menu a {
+            display: block;
+            margin: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+        #content {
+            flex-grow: 1;
+            padding: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 80vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="menu">
+ <a href="#" onclick="loadContent('index.html')">Home1</a>
+    <a href="#" onclick="loadContent('https://demo.firepad.io/#Seminar1')">Agenda</a>
+    <a href="#" onclick="loadContent('https://demo.firepad.io/#Seminar2')">Progress</a>
+    <a href="#" onclick="loadContent('https://demo.firepad.io/#Seminar3')">Chat</a>
+</div>
+
+<div id="content">
+    <iframe id="iframe" src="about:blank"></iframe>
+</div>
+
+<script>
+    function loadContent(url) {
+        const iframe = document.getElementById('iframe');
+        iframe.src = 'about:blank';
+
+        setTimeout(() => {
+            iframe.src = url;
+        }, 100);
+
+        iframe.onload = () => {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+            // CSS to hide elements
+            const css = `
+                .firepad-toolbar-wrapper,
+                .firepad-titlebar,
+                .powered-by-firepad,
+                .firepad-userlist-wrapper {
+                    display: none !important;
+                }
+            `;
+            const style = document.createElement('style');
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(css));
+            iframeDoc.head.appendChild(style);
+
+            // MutationObserver to observe and remove elements
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    const elements = iframeDoc.querySelectorAll('.firepad-toolbar-wrapper, .firepad-titlebar, .powered-by-firepad, .firepad-userlist-wrapper');
+                    elements.forEach(el => el.style.display = 'none');
+                });
+            });
+
+            observer.observe(iframeDoc.body, { childList: true, subtree: true });
+
+            // Initial removal of elements
+            const initialElements = iframeDoc.querySelectorAll('.firepad-toolbar-wrapper, .firepad-titlebar, .powered-by-firepad, .firepad-userlist-wrapper');
+            initialElements.forEach(el => el.style.display = 'none');
+        };
+    }
+
+    // Load the first page when the main page is loaded
+    window.onload = function() {
+        loadContent('https://demo.firepad.io/#Seminar1');
+    }
+</script>
+
+</body>
+</html>
